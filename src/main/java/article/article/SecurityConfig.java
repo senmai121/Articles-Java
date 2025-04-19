@@ -25,19 +25,32 @@ public class SecurityConfig {
             
         return http.build();
     }*/
+    
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .cors()
+            .and()
+            .csrf().disable()
+            .authorizeHttpRequests()
+            .anyRequest().authenticated() // 👈 ทุก request ต้อง login
+            .and()
+            .httpBasic(); // หรือ .formLogin() ถ้าใช้หน้า login
+
+        return http.build();
+    }
+    /*public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
         .cors() // เปิดใช้งาน CORS
         .and()
         .csrf().disable()  // ปิด CSRF สำหรับ API (ในกรณีที่ใช้ `POST`)
         .authorizeHttpRequests()
-        .requestMatchers("/articles/**").authenticated()  // ให้ทุกคนที่ login แล้วสามารถใช้ได้
+        .requestMatchers("/่jobs*").authenticated()  // ให้ทุกคนที่ login แล้วสามารถใช้ได้
         .anyRequest().permitAll()  // กำหนดให้ทุก request อื่นสามารถเข้าถึงได้
         .and()
         .httpBasic(); // ใช้ Basic Auth
 
         return http.build();
-    }
+    }*/
     
     
 }
